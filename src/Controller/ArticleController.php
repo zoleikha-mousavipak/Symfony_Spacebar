@@ -15,13 +15,14 @@ class ArticleController
      */
     public function homepage()
     {
-        return new Response('OMG! My first page already! Woooo!');
+        return new Response('OMG! My first page already! Wooo!');
     }
 
     /**
      * @Route("/news/{slug}")
      */
-    public function show($slug){
-        return new Response(sprintf('Future page to show one article: %s', $slug));
+    public function show($slug)
+    {
+        return new Response(sprintf('Future page to show one article of site: %s', $slug));
     }
 }
