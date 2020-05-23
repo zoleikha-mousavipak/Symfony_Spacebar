@@ -33,6 +33,7 @@ class ArticleController extends AbstractController
         ];
 
         dump($slug, $this);
+        
 
         // return new Response(sprintf('Future page to show one article of site: %s', $slug));
         return $this->render('article/show.html.twig', [
