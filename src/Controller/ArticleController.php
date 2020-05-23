@@ -12,15 +12,15 @@ use Symfony\Component\Routing;
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/", name="app_homepage")
      */
     public function homepage()
     {
-        return new Response('OMG! My first page already! Wooo!');
+        return $this->render('article/homepage.html.twig');
     }
 
     /**
-     * @Route("/news/{slug}")
+     * @Route("/news/{slug}" , name="article_show")
      */
     public function show($slug)
     {
@@ -33,7 +33,7 @@ class ArticleController extends AbstractController
         ];
 
         dump($slug, $this);
-        
+
 
         // return new Response(sprintf('Future page to show one article of site: %s', $slug));
         return $this->render('article/show.html.twig', [
