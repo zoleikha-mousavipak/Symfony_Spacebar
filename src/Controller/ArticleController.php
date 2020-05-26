@@ -10,6 +10,8 @@ use Symfony\Component\Routing;
 use App\Controller\JsonResponse;
 use Michelf\MarkdownInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Component\Cache\Adapter\TagAwareAdapterInterface;
 
 class ArticleController extends AbstractController
 {
@@ -24,7 +26,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/news/{slug}" , name="article_show")
      */
-    public function show($slug, MarkdownInterface $markdown)
+    public function show($slug, MarkdownInterface $markdown, AdapterInterface $cache)
     {
         $comments = [
             'This is first comment!',
@@ -46,10 +48,15 @@ ribs cupim short loin in. Elit exercitation eiusmod dolore cow turkey shank eu p
                             
 ";
 
-        dump($slug, $this);
+        // dump($slug, $this);
 
+        $item = $cache->getItem('markdown_'.md5($articlecontent));
+        if (!$item->isHit()) {
+            $item->set($markdown->transform($articlecontent));
+            $cache->save($item);
+}
 
-        $articlecontent = $markdown->transform($articlecontent);
+        $articlecontent=$item->get();
 
         // return new Response(sprintf('Future page to show one article of site: %s', $slug));
         return $this->render('article/show.html.twig', [
