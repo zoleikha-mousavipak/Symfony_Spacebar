@@ -50,13 +50,13 @@ ribs cupim short loin in. Elit exercitation eiusmod dolore cow turkey shank eu p
 
         // dump($slug, $this);
 
-        $item = $cache->getItem('markdown_'.md5($articlecontent));
+        $item = $cache->getItem('markdown_' . md5($articlecontent));
         if (!$item->isHit()) {
             $item->set($markdown->transform($articlecontent));
             $cache->save($item);
-}
+        }
 
-        $articlecontent=$item->get();
+        $articlecontent = $item->get();
 
         // return new Response(sprintf('Future page to show one article of site: %s', $slug));
         return $this->render('article/show.html.twig', [
